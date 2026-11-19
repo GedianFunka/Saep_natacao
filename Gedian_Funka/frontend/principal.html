@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <h1>Página principal</h1>
+
+    <h2 id="usuario"></h2>
+
+    <button onclick="abrir('responsavel.html')">Responsavel</button>
+    <button onclick="abrir('filho.html')">Filho</button>
+    <button onclick="abrir('agendamentos.html')">Agendamentos</button>
+    <button onclick="logout()">Sair</button>
+
+    <script src="sessao.js"></script>
+    <script>
+        document.getElementById('usuario').innerHTML = 'Bem-vindo(a), ' + usuario.nome;
+
+        function abrir(pagina){
+            window.location.href = pagina;
+        }
+    </script>
+
+</body>
+</html>
