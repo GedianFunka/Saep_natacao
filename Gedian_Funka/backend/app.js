@@ -59,7 +59,94 @@ server.get('/Responsavel/:id', (req, res) => {
     });
 });
 
-server.post('/')
+server.post('/Responsavel', (req, res) => {
+    const sql = 'INSERT INTO Responsavel (nome, CPF, email, telefone) VALUES (?, AES_ENCRYPT(?,?), ?, ?)';
+
+    connection.query(sql, [nome, CPF, CHAVE, email, telefone] , (erro, resultado) => {
+        if(erro){
+            if(erro.code == 'ER_DUP_ENTRY') {
+                return status(500).json({mensagem: 'CPF já cadastrado'});
+            }
+            return res.status(500).json({mensagem: erro.mensagem});
+        }
+        res.json({mensagem: 'Responsavel cadastrado com sucesso!', id_responsavel: resultado.insertId});
+    });
+});
+
+server.put('/Responsavel/:id', (req, res) => {
+    const {nome, CPF, email, telefone} = req.body;
+
+    const sql = 'UPDATE Responsavel SET nome = ?, CPF = AES_ENCRYPT(?,?), email = ?, telefone = ? WHERE id_responsavel = ?';
+
+    connection.query(sql[nome, CPF, CHAVE, email, telefone], (erro, resultado) => {
+        if(erro)
+            return res.status(500).json({mensagem: erro.mensagem});
+        res.json({mensagem: 'Cliente atualizado com sucesso!'});
+    });
+});
+
+server.delete('Responsavel/:id', (req,res) => {
+    connection.query('DELETE FROM Responsavel WHERE id_responsavel = ?', [req.params.id_responsavel], (erro) => {
+        if(erro){
+            if(erro.code == 'ER_ROW_IS_REFERENCED_2') {
+                return res.status(500).json({mensagem: 'Responsavel possui filhos e não pode ser excluído.'});
+            }
+            return res.status(500).json({mensagem: erro.mensagem});
+        }
+        res.json({mensagem: 'Responsavel removido com sucesso!'});
+    });
+});
+
+server.post('/Filho', (req, res) => {
+    const {id_responsavel, nome, data_nascimento, nivel_natacao} = req.body;
+
+    if(!id_responsavel){
+        return res.status(400).json({mensagem: "O filho tem que estar associado a um responsável"});
+    }
+
+    const sql = 'INSERT INTO Filho (id_responsavel, nome, data_nascimento, nivel_natacao), VALUES(?,?,?,?)';
+
+    connection.query(sql, [id_responsavel, nome, data_nascimento, nivel_natacao], (erro, resultado) => {
+        if(erro) return res.status(500).json({mensagem: erro.message});
+        res.json({mensagem: 'Filho cadastrado com sucesso!', id: resultado.insertId});
+        });
+    });
+
+server.get('/Aulas', (req,res) => {
+    const sql = `
+    SELECT a.id_aulas, a.nome_professor, a.horario,
+        f.nome, f.data_nascimento, f.nivel_natacao,
+        r.nome AS Responsavel_nome, CAST(AES_DECRYPT(c.CPF,?) AS CHAR) AS Responsavel_CPF,
+        r.email AS Responsavel_email, r.telefone AS Responsavel_telefone
+    FROM Aulas a
+    INNER JOIN Filhos f ON f.id_filho = a.Filho_id_filho
+    INNER JOIN Responsavel r ON r.id_responsavel = f.Responsavel_id_responsavel
+    ORDER BY a.horario, 
+    `;
+
+    connection.query(sql[CHAVE], (erro, resultado) => {
+        if(erro) return res.status(500).json({mensagem: erro.message});
+        res.json({resultado});
+    });
+});
+
+server.get('/Aulas/:id', (req, res) => {
+    connection.query('SELECT * FROM Aulas WHERE id_aulas = ?', [req.params.id], (erro, resultado) => {
+        if(erro) return res.status(500).json({mensagem: erro.message});
+        return res.json(resultado[0]);
+    });
+});
+
+server.put('/Aulas/:id', (req,res) => {
+    const {horario, nome_professor} =req.body;
+
+    const sql = 'SELECT Aulas set horario = ?, nome_professor = ?, WHERE id_aulas = ?';
+
+    connection.query(sql[data_nascimento, horario, req.params.id], (erro, resultado) => {
+        if(erro) return res.status(500).json({mensagem: erro.mensage});
+        res.json({resultado});
+    });
+});
 
 //Servidor
 const PORT = 3025;

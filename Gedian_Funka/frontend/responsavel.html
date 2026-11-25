@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsavel</title>
+</head>
+<body>
+    
+    <h1>Gerenciamento de Responsaveis</h1>
+    <button onclick="voltar()">voltar</button>
+    <button onclick="logout()">logout</button>
+    <hr>
+
+    <!--Formulário-->
+    <label>Nome</label> <br>
+    <input type="text" id="Nome"> <br> <br>
+
+    <label>Email</label> <br>
+    <input type="text" id="Email"> <br> <br>
+
+    <button onclick="cadastrar()">Cadastrar</button>
+    <hr>
+
+    <!--Buscar-->
+    <input type="text" id="busca" placeholder="Digite o nome">
+    <button onclick="pesquisar()">Pesquisar</button>
+
+    <!--Tabela-->
+    <table border="1">
+        <thead>
+            <tr><th>ID</th><th>Nome</th><th>Email</th><th>Acoes</th></tr>
+        </thead>
+        <tbody id="tabela"></tbody>
+    </table>
+
+    <!--Scripts-->
+    <script src="api.js"></script>
+    <script src="sessao.js"></script>
+    <script src="clientes.js"></script>
+</body>
+</html>
