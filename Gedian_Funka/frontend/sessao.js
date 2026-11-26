@@ -1,5 +1,3 @@
-const { setInterval } = require("timers");
-
 const usuario = JSON.parse(localStorage.getItem('usuario'));
 const expira = localStorage.getItem('expira');
 
@@ -13,13 +11,13 @@ if(!usuario){
 setInterval(() => {
     if(Date.now() > Number(localStorage.getItem('expira'))){
         alert('Sua sessão expirou. Faça login novamente!');
-        logout;
+        logout();
     }
 }, 30000);
 
 function logout(){
     localStorage.removeItem('usuario');
-    localStorage.removeItem('senha');
+    localStorage.removeItem('expira');
     window.location.href = 'login.html';
 }
 

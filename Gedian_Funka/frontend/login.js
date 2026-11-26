@@ -16,7 +16,7 @@ async function entrar() {
 
     if(dados.sucesso){
         localStorage.setItem('usuario', JSON.stringify(dados.usuario));
-        localStorage.setItem('expira', Date.now(), + tempo_sessao);
+        localStorage.setItem('expira', Date.now() + tempo_sessao);
         window.location.href = 'principal.html';
     }else{
         msg.innerHTML = dados.mensagem;  //Ex.: "Login ou senha inválidos"

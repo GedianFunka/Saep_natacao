@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS `Saep_teste`.`Responsavel` (
   `id_responsavel` INT NOT NULL auto_increment,
   `nome` VARCHAR(45) NOT NULL,
   `CPF` varbinary(255) NOT NULL,
-  `e-mail` VARCHAR(45) NOT NULL,
+  `email` VARCHAR(45) NOT NULL,
   `telefone` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id_responsavel`),
   UNIQUE INDEX `CPF_UNIQUE` (`CPF` ASC) VISIBLE)
@@ -81,7 +81,7 @@ SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
-insert into `saep_teste`.`Responsavel`(`nome`,`CPF`,`e-mail`, `telefone`) values
+insert into `saep_teste`.`Responsavel`(`nome`,`CPF`,`email`, `telefone`) values
 ('Helena Souza', aes_encrypt('111.222.333-44', 'chave123'), 'helena@gmail.com', '(48) 99999-0001'),
 ('Igor Martins', aes_encrypt('222.333.444-55', 'chave123'), 'igor@gmail.com', '(48) 99999-0002'),
 ('Joana Lima', aes_encrypt('333.444.555-66', 'chave123'), 'joana@gmail.com', '(48) 99999-0003');

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agendamentos</title>
+</head>
+<body>
+
+    <h1>Agendamentos de Aulas</h1>
+    <button onclick="voltar()">Voltar</button>
+    <button onclick="logout()">Sair</button>
+    <hr>
+
+    <!--Tabela-->
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th><th>Data</th><th>Horário</th><th>Professor</th>
+                <th>Filho</th><th>Nascimento</th><th>Nível</th>
+                <th>Responsável</th><th>CPF</th><th>E-mail</th><th>Telefone</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody id="tabela"></tbody>
+    </table>
+
+    <!--SCRIPTS-->
+    <script src="api.js"></script>
+    <script src="sessao.js"></script>
+    <script src="agendamento.js"></script>
+</body>
+</html>

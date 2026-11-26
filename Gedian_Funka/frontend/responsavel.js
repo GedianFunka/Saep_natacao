@@ -7,12 +7,12 @@ async function listar() {
 function montarTabela(lista) {
     document.getElementById('tabela').innerHTML = lista.map(item => `
         <tr>
-            <td>${item.id}</td>
+            <td>${item.id_responsavel}</td>
             <td>${item.nome}</td>
             <td>${item.email}</td>
             <td>
-                <button onclick = "editar(${item.id})">Editar</button>
-                <button onclick = "excluir(${item.id})">Excluir</button>
+                <button onclick = "editar(${item.id_responsavel})">Editar</button>
+                <button onclick = "excluir(${item.id_responsavel})">Excluir</button>
             </td>
         </tr>
     `).join('');
@@ -21,7 +21,7 @@ function montarTabela(lista) {
 function lerCampos(){
     return{
         nome: document.getElementById('nome').value,
-        CPF: document.getElementById('CPF').value,
+        CPF: document.getElementById('cpf').value,
         email: document.getElementById('email').value,
         telefone: document.getElementById('telefone').value
     };
@@ -61,19 +61,19 @@ function limparCampos(){
 async function pesquisar() {
     const termo = document.getElementById('busca').value;
 
-    if(termo = ''){
+    if(termo == ''){
         listar();
         return;
     }
 
-    const lista = await buscarJson(`/Responsavel/busca/$(termo)`);
-    if(lista.length == 0)
+    const lista = await buscarJson(`/Responsavel/busca/${termo}`);
+    if(lista.length == 0){
         alert('Nenhum registro encontrado.');
+    }
         montarTabela(lista);
 }
-
 async function editar(id) {
-    const atual = await buscarJson(`/Responsavel/$(id_responsavel)`)
+    const atual = await buscarJson(`/Responsavel/${id}`)
 
     const nome = prompt('Nome', atual.nome);
     if(nome==null) return;
@@ -87,13 +87,13 @@ async function editar(id) {
     const telefone = prompt('Telefone', atual.telefone)
     if(telefone == null) return;
 
-    await enviar(`/Responsavel/$(id)`, 'PUT', {nome, email, CPF, telefone});
+    await enviar(`/Responsavel/${id}`, 'PUT', {nome, email, CPF, telefone});
     listar();
 }
 
 async function excluir(id) {
         if(!confirm('Deseja excluir este registro?')) return;
 
-        await enviar (`/Responsavel/$(id)`, 'DELETE');
+        await enviar (`/Responsavel/${id}`, 'DELETE');
         listar();
 }
